@@ -1,0 +1,23 @@
+//回溯
+class Solution {
+public:
+    //回溯
+    void swapachange(vector<vector<int>> &res,vector<int>& nums,int first,int len){
+        //结束条件
+        if(first==len){
+            res.emplace_back(nums);
+            return;
+        }
+        //回溯
+        for(int i=first;i<len;++i){
+            swap(nums[i],nums[first]);
+            swapachange(res,nums,first+1,len);
+            swap(nums[i],nums[first]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> res;
+        swapachange(res,nums,0,nums.size());
+        return res;
+    }
+};
