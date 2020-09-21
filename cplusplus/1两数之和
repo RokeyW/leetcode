@@ -1,0 +1,66 @@
+class Solution {
+public:
+    //暴力
+    /*vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> rt;
+        for(int i=0;i<nums.size()-1;i++){
+            for(int j=i+1;j<nums.size();j++){
+                if(nums[i]+nums[j]==target){
+                    rt.push_back(i);
+                    rt.push_back(j);
+                    return rt;
+                }
+            }
+        }
+    return rt;
+    }
+*/
+/*
+    //两遍hash
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int,int> a;
+        vector<int> b(2,-1);
+        //map键值对 值与下标
+        for(int i=0;i<nums.size();++i){
+            a.insert(map<int,int>::value_type(nums[i],i));
+        }
+        //判断
+        for(int i=0;i<nums.size();i++){
+            if(a.count(target-nums[i])>0&&a[target-nums[i]]!=i){
+                b[0]=i;
+                b[1]=a[target-nums[i]];
+            }
+        }
+        return b;
+    }*/
+
+    /*vector<int> twoSum(vector<int>& nums, int target) {
+        map<int,int> a;//提供一对一的hash
+        vector<int> b(2,-1);//用来承载结果，初始化一个大小为2，值为-1的容器b
+        for(int i=0;i<nums.size();i++)
+        {
+            if(a.count(target-nums[i])>0)
+            {
+                b[0]=a[target-nums[i]];
+                b[1]=i;
+                break;
+            }
+            a[nums[i]]=i;//反过来放入map中，用来获取结果下标
+        }
+        return b;
+    }*/
+    vector<int> twoSum(vector<int>& nums, int target) {
+        std::unordered_map <int,int> map;
+        for(int i = 0; i < nums.size(); i++) {
+            auto iter = map.find(target - nums[i]);
+            if(iter != map.end()) {
+                return {iter->second, i};
+            }
+            map.insert(pair<int, int>(nums[i], i));
+        }
+        return {};
+    }
+
+
+
+};
