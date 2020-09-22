@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ //dfs递归
+class Solution {
+public:
+    int result=0;
+    int minCameraCover(TreeNode* root) {
+        if(dfs(root)==1){
+            result++;
+        }
+        return result;
+    }
+
+    //递归函数
+    //0可被监控无摄像头 1无法监控 2有摄像头
+    int dfs(TreeNode * root){
+        if(root==NULL){
+            return 0;
+        }
+        int leftS=dfs(root->left);
+        int rightS=dfs(root->right);
+        if(leftS==1||rightS==1){
+            result++;
+            return 2;
+        }else if(leftS==2||rightS==2){
+            return 0;
+        }else{
+            return 1;
+        }
+    }
+};
