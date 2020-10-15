@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ /**
+ *解题思路：中序遍历将节点信息保存在数组中，
+ *再通过新建节点形成只有右子数的树
+ */
+class Solution {
+public:
+    //inOrder
+    void inOrder(TreeNode* root,vector<int> &value){
+        if(root==NULL) return;//递归回归点
+        inOrder(root->left,value);
+        value.push_back(root->val);
+        inOrder(root->right,value);
+    }
+
+    TreeNode* increasingBST(TreeNode* root) {
+        vector<int> result;
+        inOrder(root,result);
+        TreeNode* head=new TreeNode(0);
+        TreeNode* temp=head;//写指针
+        for(int i=0;i<result.size();i++){
+            temp->right=new TreeNode(result[i]);
+            temp=temp->right;
+        }
+        return head->right;
+    }
+};
