@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int longestSubstring(string s, int k) {
+        //map由红黑树实现，unorder_map由hash表实现
+        unordered_map<char,int> umap;
+        for(auto c : s) umap[c]++;//hash中value+1
+        vector<int> split;
+        //将hash中统计的出现次数少于k的数下标存入split用于分割s,进一步采用分治法继续查找
+        for(int i=0;i<s.size();i++){
+            if(umap[s[i]]<k) split.push_back(i);
+        }
+        //剪枝 如果分割数组为0，则s中所有元素均出现超过k次 返回s的长度
+        //如果分割数组和s一样长，返回0
+        if(split.size()==0) return s.length();
+        if (split.size() ==s.size()) return 0;
+        //分治
+        int ans=0,left=0;//ans 答案，left为分割左边界
+        split.push_back(s.length());//将s的长度作为右边界加入分割
+        for(int i=0;i<split.size();i++){
+            int len=split[i]-left;
+            //判断子段长度与当前最大ans，如果小于直接跳过
+            if(len>ans) ans=max(ans,longestSubstring(s.substr(left,len),k));
+            left=split[i]+1;
+        }
+        return ans;
+    }
+};
